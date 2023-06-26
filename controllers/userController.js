@@ -4,11 +4,12 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const authenticateUser = async (req, res) => {
-  const { user, password } = req.body;
+  const { user_id, password } = req.body;
+  console.log({ user_id, password });
 
   connection.query(
     'SELECT * FROM auth_table WHERE user_id = ?',
-    [user],
+    [user_id],
     (err, results) => {
       if (err) {
         console.error('Error querying the database:', err);
