@@ -1,4 +1,5 @@
 const express = require('express');
+require('dotenv').config();
 const connection = require('./sql');
 const morgan = require('morgan');
 const cors = require('cors');

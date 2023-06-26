@@ -2,6 +2,7 @@ const mysql = require('mysql2');
 const connection = require('../sql');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const generateToken = require('../utils/generateToken');
 
 const authenticateUser = async (req, res) => {
   const { user_id, password } = req.body;
@@ -38,9 +39,7 @@ const authenticateUser = async (req, res) => {
           return;
         }
 
-        const token = jwt.sign({ id: user.id }, 'your_secret_key', {
-          expiresIn: '1h',
-        });
+        const token = generateToken({ user_id });
 
         res.status(200).json({ token });
       });
@@ -79,7 +78,33 @@ const createUser = async (req, res) => {
   });
 };
 
+const userRole = async (req, res) => {
+  const user_id = req.decoded.user_id;
+  connection.query(
+    'SELECT user_id, role FROM auth_table WHERE user_id = ?',
+    [user_id],
+    (err, results) => {
+      if (err) {
+        console.error('Error querying the database:', err);
+        res.status(500).json({ message: 'Internal server error' });
+        return;
+      }
+
+      // Check if the user exists
+      if (results.length === 0) {
+        res.status(401).json({ message: 'Invalid  user_id or password' });
+        return;
+      }
+      const user = results[0];
+
+      console.log(user);
+      res.status(200).json(user);
+    }
+  );
+};
+
 module.exports = {
   authenticateUser,
   createUser,
+  userRole,
 };
