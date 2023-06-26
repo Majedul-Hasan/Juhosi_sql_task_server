@@ -49,7 +49,7 @@ const authenticateUser = async (req, res) => {
 
 const createUser = async (req, res) => {
   const { user_id, password, role } = req.body;
-  console.log({ user_id, password, role });
+  // console.log({ user_id, password, role });
 
   // Hash the password using bcrypt
   bcrypt.hash(password, 10, (err, hash) => {

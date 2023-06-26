@@ -4,7 +4,8 @@ const connection = require('./sql');
 const morgan = require('morgan');
 const cors = require('cors');
 
-const Route = require('./routes/router.js');
+const authRoute = require('./routes/authRouter.js');
+const orderRoute = require('./routes/orderRouter.js');
 
 const app = express();
 
@@ -16,7 +17,8 @@ const PORT = process.env.PORT || 3000;
 
 connection.connect();
 
-app.use('', Route);
+app.use('', authRoute);
+app.use('', orderRoute);
 
 app.get('/', (req, res) => {
   res.send('Hello from Node.js!');
