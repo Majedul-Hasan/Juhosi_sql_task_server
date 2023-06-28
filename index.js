@@ -17,8 +17,8 @@ const PORT = process.env.PORT || 3000;
 
 connection.connect();
 
-app.use('', authRoute);
-app.use('', orderRoute);
+app.use('/', authRoute);
+app.use('/', orderRoute);
 
 app.get('/', (req, res) => {
   res.send('Hello from Node.js!');
