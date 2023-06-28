@@ -7,7 +7,7 @@ const mysql = require('mysql2');
 //   database: 'if0_34513620_customer_system',
 // });
 const connection = mysql.createConnection({
-  host: '127.0.0.1',
+  host: '0.0.0.0',
   user: 'root',
   password: 'hasan2023',
   database: 'customer_system',
